@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
         }
     }
 
+    /*
     private fun getStores(){
         doAsync {
             val stores = StoreApplication.database.storeDao().getAllStores()
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
             }
         }
     }
+    */
 
     /*
     * OnClickListener
