@@ -25,8 +25,8 @@ android {
         }
     }
 
-    viewBinding{
-        enabled = true
+    buildFeatures {
+        viewBinding = true
     }
 
     compileOptions {
@@ -40,6 +40,7 @@ android {
 
 def room_version = "2.2.5"
 def anko_version = "0.10.8"
+def lifecycle_version = "2.2.0"
 
 dependencies {
 
@@ -62,4 +63,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
 }
