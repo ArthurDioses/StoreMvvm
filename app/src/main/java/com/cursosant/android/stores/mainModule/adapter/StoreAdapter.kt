@@ -1,4 +1,4 @@
-package com.cursosant.android.stores
+package com.cursosant.android.stores.mainModule.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.cursosant.android.stores.R
+import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.databinding.ItemStoreBinding
 
 /****

@@ -1,4 +1,4 @@
-package com.cursosant.android.stores
+package com.cursosant.android.stores.mainModule
 
 import android.content.Intent
 import android.net.Uri
@@ -6,7 +6,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.cursosant.android.stores.editModule.EditStoreFragment
+import com.cursosant.android.stores.common.utils.MainAux
+import com.cursosant.android.stores.R
+import com.cursosant.android.stores.StoreApplication
+import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.databinding.ActivityMainBinding
+import com.cursosant.android.stores.mainModule.adapter.OnClickListener
+import com.cursosant.android.stores.mainModule.adapter.StoreAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread

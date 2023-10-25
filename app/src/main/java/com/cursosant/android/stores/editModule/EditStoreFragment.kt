@@ -1,4 +1,4 @@
-package com.cursosant.android.stores
+package com.cursosant.android.stores.editModule
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,11 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.cursosant.android.stores.R
+import com.cursosant.android.stores.StoreApplication
+import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.databinding.FragmentEditStoreBinding
+import com.cursosant.android.stores.mainModule.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import org.jetbrains.anko.doAsync
@@ -125,7 +129,7 @@ class EditStoreFragment : Fragment() {
                                 mActivity?.updateStore(mStoreEntity!!)
 
                                 Snackbar.make(mBinding.root,
-                                        R.string.edit_store_message_update_success,
+                                    R.string.edit_store_message_update_success,
                                         Snackbar.LENGTH_SHORT).show()
                             } else {
                                 mActivity?.addStore(mStoreEntity!!)
@@ -154,7 +158,7 @@ class EditStoreFragment : Fragment() {
         }
 
         if (!isValid) Snackbar.make(mBinding.root,
-                R.string.edit_store_message_valid,
+            R.string.edit_store_message_valid,
                 Snackbar.LENGTH_SHORT).show()
 
         return isValid
