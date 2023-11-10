@@ -7,17 +7,21 @@ import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.mainModule.model.MainInteractor
 
 class MainViewModel : ViewModel() {
-    private val stores: MutableLiveData<List<StoreEntity>>
     private val interactor: MainInteractor
 
     init {
         interactor = MainInteractor()
-        stores = MutableLiveData()
-        loadStores()
+    }
+
+    private val stores: MutableLiveData<List<StoreEntity>> by lazy {
+        MutableLiveData<List<StoreEntity>>()/*.also { //descomentar con Corutines
+            loadStores()
+        }*/
+
     }
 
     fun getStores(): LiveData<List<StoreEntity>> {
-        return stores
+        return stores.also { loadStores() }
     }
 
     private fun loadStores() {
