@@ -75,17 +75,6 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
     }
 
     /*
-    private fun getStores(){
-        doAsync {
-            val stores = StoreApplication.database.storeDao().getAllStores()
-            uiThread {
-                mAdapter.setStores(stores)
-            }
-        }
-    }
-    */
-
-    /*
     * OnClickListener
     * */
     override fun onClick(storeId: Long) {
@@ -122,8 +111,19 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
                 .show()
     }
 
-    private fun confirmDelete(storeEntity: StoreEntity){
-
+    private fun confirmDelete(storeEntity: StoreEntity) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.dialog_delete_title)
+            .setPositiveButton(R.string.dialog_delete_confirm, { dialogInterface, i ->
+                doAsync {
+                    StoreApplication.database.storeDao().deleteStore(storeEntity)
+                    uiThread {
+                        mAdapter.delete(storeEntity)
+                    }
+                }
+            })
+            .setNegativeButton(R.string.dialog_delete_cancel, null)
+            .show()
     }
 
     private fun dial(phone: String){
