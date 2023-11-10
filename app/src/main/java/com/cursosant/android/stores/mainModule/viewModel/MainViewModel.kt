@@ -14,21 +14,19 @@ class MainViewModel : ViewModel() {
     }
 
     private val stores: MutableLiveData<List<StoreEntity>> by lazy {
-        MutableLiveData<List<StoreEntity>>()/*.also { //descomentar con Corutines
+        MutableLiveData<List<StoreEntity>>().also {
             loadStores()
-        }*/
+        }
 
     }
 
     fun getStores(): LiveData<List<StoreEntity>> {
-        return stores.also { loadStores() }
+        return stores
     }
 
     private fun loadStores() {
-        interactor.getStoresCallback(object : MainInteractor.StoresCallback {
-            override fun getStoreCallback(stores: MutableList<StoreEntity>) {
-                this@MainViewModel.stores.value = stores
-            }
-        })
+        interactor.getStores {
+            stores.value = it
+        }
     }
 }
