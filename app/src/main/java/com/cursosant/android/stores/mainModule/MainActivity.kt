@@ -86,12 +86,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
 
     override fun onFavoriteStore(storeEntity: StoreEntity) {
         storeEntity.isFavorite = !storeEntity.isFavorite
-        doAsync {
-            StoreApplication.database.storeDao().updateStore(storeEntity)
-            uiThread {
-                updateStore(storeEntity)
-            }
-        }
+        // TODO: update
     }
 
     override fun onDeleteStore(storeEntity: StoreEntity) {
@@ -115,12 +110,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.dialog_delete_title)
             .setPositiveButton(R.string.dialog_delete_confirm, { dialogInterface, i ->
-                doAsync {
-                    StoreApplication.database.storeDao().deleteStore(storeEntity)
-                    uiThread {
-                        mAdapter.delete(storeEntity)
-                    }
-                }
+                // TODO: Delete
             })
             .setNegativeButton(R.string.dialog_delete_cancel, null)
             .show()

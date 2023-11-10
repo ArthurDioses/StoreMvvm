@@ -15,4 +15,22 @@ class MainInteractor {
             }
         }
     }
+
+    fun deleteStore(storeEntity: StoreEntity, callback: (StoreEntity) -> Unit) {
+        doAsync {
+            StoreApplication.database.storeDao().deleteStore(storeEntity)
+            uiThread {
+                callback(storeEntity)
+            }
+        }
+    }
+
+    fun updateStore(storeEntity: StoreEntity, callback: (StoreEntity) -> Unit) {
+        doAsync {
+            StoreApplication.database.storeDao().updateStore(storeEntity)
+            uiThread {
+                callback(storeEntity)
+            }
+        }
+    }
 }
