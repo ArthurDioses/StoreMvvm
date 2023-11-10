@@ -7,9 +7,11 @@ import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.mainModule.model.MainInteractor
 
 class MainViewModel : ViewModel() {
+    private var storeList: MutableList<StoreEntity>
     private val interactor: MainInteractor
 
     init {
+        storeList = mutableListOf()
         interactor = MainInteractor()
     }
 
@@ -29,4 +31,25 @@ class MainViewModel : ViewModel() {
             stores.value = it
         }
     }
+
+    fun deleteStore(storeEntity: StoreEntity) {
+        interactor.deleteStore(storeEntity, {
+            val index = storeList.indexOf(storeEntity)
+            if (index != -1) {
+                storeList.removeAt(index)
+                stores.value = storeList
+            }
+        })
+    }
+
+    fun updateStore(storeEntity: StoreEntity) {
+        interactor.updateStore(storeEntity, {
+            val index = storeList.indexOf(storeEntity)
+            if (index != -1) {
+                storeList.set(index, storeEntity)
+                stores.value = storeList
+            }
+        })
+    }
+
 }
