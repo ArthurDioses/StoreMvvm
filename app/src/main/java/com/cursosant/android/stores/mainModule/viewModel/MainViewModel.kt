@@ -13,6 +13,7 @@ class MainViewModel : ViewModel() {
 
     init {
         stores = MutableLiveData()
+        loadStores()
     }
 
     fun getStores(): LiveData<List<StoreEntity>> {
