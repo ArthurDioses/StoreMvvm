@@ -29,6 +29,7 @@ class MainViewModel : ViewModel() {
     private fun loadStores() {
         interactor.getStores {
             stores.value = it
+            storeList = it
         }
     }
 
@@ -43,6 +44,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun updateStore(storeEntity: StoreEntity) {
+        storeEntity.isFavorite = !storeEntity.isFavorite
+
         interactor.updateStore(storeEntity, {
             val index = storeList.indexOf(storeEntity)
             if (index != -1) {
