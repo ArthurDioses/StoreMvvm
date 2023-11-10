@@ -3,15 +3,15 @@ package com.cursosant.android.stores.mainModule.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cursosant.android.stores.StoreApplication
 import com.cursosant.android.stores.common.entities.StoreEntity
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import com.cursosant.android.stores.mainModule.model.MainInteractor
 
 class MainViewModel : ViewModel() {
     private val stores: MutableLiveData<List<StoreEntity>>
+    private val interactor: MainInteractor
 
     init {
+        interactor = MainInteractor()
         stores = MutableLiveData()
         loadStores()
     }
@@ -21,12 +21,10 @@ class MainViewModel : ViewModel() {
     }
 
     private fun loadStores() {
-
-        doAsync {
-            val storeList = StoreApplication.database.storeDao().getAllStores()
-            uiThread {
-                stores.value = storeList
+        interactor.getStoresCallback(object : MainInteractor.StoresCallback {
+            override fun getStoreCallback(stores: MutableList<StoreEntity>) {
+                this@MainViewModel.stores.value = stores
             }
-        }
+        })
     }
 }
