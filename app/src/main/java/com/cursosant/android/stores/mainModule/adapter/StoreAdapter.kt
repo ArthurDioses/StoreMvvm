@@ -86,7 +86,7 @@ class StoreAdapter(private var stores: MutableList<StoreEntity>, private var lis
 
         fun setListener(storeEntity: StoreEntity){
             with(binding.root) {
-                setOnClickListener { listener.onClick(storeEntity.id) }
+                setOnClickListener { listener.onClick(storeEntity) }
                 setOnLongClickListener {
                     listener.onDeleteStore(storeEntity)
                     true

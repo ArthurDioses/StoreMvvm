@@ -13,7 +13,7 @@ import com.cursosant.android.stores.common.entities.StoreEntity
  * https://www.udemy.com/user/alain-nicolas-tello/
  ***/
 interface OnClickListener {
-    fun onClick(storeId: Long)
+    fun onClick(storeEntity: StoreEntity)
     fun onFavoriteStore(storeEntity: StoreEntity)
     fun onDeleteStore(storeEntity: StoreEntity)
 }

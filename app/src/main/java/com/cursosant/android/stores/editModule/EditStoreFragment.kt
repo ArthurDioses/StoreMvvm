@@ -50,23 +50,23 @@ class EditStoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = arguments?.getLong(getString(R.string.arg_id), 0)
-        if (id != null && id != 0L){
-            mIsEditMode = true
-            getStore(id)
-        } else {
-            mIsEditMode = false
-            mStoreEntity = StoreEntity(name = "", phone = "", photoUrl = "")
-        }
-
         //MVVM
         setupViewModel()
-        setupActionBar()
+
         setupTextFields()
     }
 
     private fun setupViewModel() {
-
+        mEditStoreViewModel.getStoreSelected().observe(viewLifecycleOwner, {
+            mStoreEntity = it
+            if (it.id != 0L) {
+                mIsEditMode = true
+                setUiStore(it)
+            } else {
+                mIsEditMode = false
+            }
+            setupActionBar()
+        })
     }
 
     private fun setupActionBar() {
@@ -95,13 +95,6 @@ class EditStoreFragment : Fragment() {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .into(mBinding.imgPhoto)
-    }
-
-    private fun getStore(id: Long) {
-        doAsync {
-            mStoreEntity = StoreApplication.database.storeDao().getStoreById(id)
-            uiThread { if (mStoreEntity != null) setUiStore(mStoreEntity!!) }
-        }
     }
 
     private fun setUiStore(storeEntity: StoreEntity) {
