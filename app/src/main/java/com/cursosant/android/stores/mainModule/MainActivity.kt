@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cursosant.android.stores.editModule.EditStoreFragment
-import com.cursosant.android.stores.common.utils.MainAux
 import com.cursosant.android.stores.R
-import com.cursosant.android.stores.StoreApplication
 import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.databinding.ActivityMainBinding
 import com.cursosant.android.stores.editModule.viewModel.EditStoreViewModel
@@ -18,8 +16,6 @@ import com.cursosant.android.stores.mainModule.adapter.OnClickListener
 import com.cursosant.android.stores.mainModule.adapter.StoreAdapter
 import com.cursosant.android.stores.mainModule.viewModel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
@@ -44,19 +40,19 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun setupViewModel() {
-        mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        mMainViewModel.getStores().observe(this, { stores ->
+        mMainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        mMainViewModel.getStores().observe(this) { stores ->
             mAdapter.setStores(stores)
-        })
+        }
 
-        mEditStoreViewModel = ViewModelProvider(this).get(EditStoreViewModel::class.java)
-        mEditStoreViewModel.getShowFab().observe(this, { isVisible ->
+        mEditStoreViewModel = ViewModelProvider(this)[EditStoreViewModel::class.java]
+        mEditStoreViewModel.getShowFab().observe(this) { isVisible ->
             if (isVisible) mBinding.fab.show() else mBinding.fab.hide()
-        })
+        }
 
-        mEditStoreViewModel.getStoreSelected().observe(this, { storeEntity ->
+        mEditStoreViewModel.getStoreSelected().observe(this) { storeEntity ->
             mAdapter.add(storeEntity)
-        })
+        }
     }
 
     private fun launchEditFragment(storeEntity: StoreEntity = StoreEntity()) {
@@ -100,24 +96,24 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_options_title)
-                .setItems(items, { dialogInterface, i ->
-                    when(i){
+                .setItems(items) { _, i ->
+                    when (i) {
                         0 -> confirmDelete(storeEntity)
 
                         1 -> dial(storeEntity.phone)
 
                         2 -> goToWebsite(storeEntity.website)
                     }
-                })
-                .show()
+                }
+            .show()
     }
 
     private fun confirmDelete(storeEntity: StoreEntity) {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.dialog_delete_title)
-            .setPositiveButton(R.string.dialog_delete_confirm, { dialogInterface, i ->
+            .setPositiveButton(R.string.dialog_delete_confirm) { _, i ->
                 mMainViewModel.deleteStore(storeEntity)
-            })
+            }
             .setNegativeButton(R.string.dialog_delete_cancel, null)
             .show()
     }

@@ -42,15 +42,15 @@ class EditStoreViewModel : ViewModel() {
     }
 
     fun saveStore(storeEntity: StoreEntity) {
-        interactor.saveStore(storeEntity, { newId ->
+        interactor.saveStore(storeEntity) { newId ->
             result.value = newId
-        })
+        }
     }
 
     fun updateStore(storeEntity: StoreEntity) {
-        interactor.updateStore(storeEntity, { storeUpdate ->
+        interactor.updateStore(storeEntity) { storeUpdate ->
             result.value = storeUpdate
-        })
+        }
     }
 
 

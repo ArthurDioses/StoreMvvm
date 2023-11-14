@@ -12,16 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.cursosant.android.stores.R
-import com.cursosant.android.stores.StoreApplication
 import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.databinding.FragmentEditStoreBinding
 import com.cursosant.android.stores.editModule.viewModel.EditStoreViewModel
 import com.cursosant.android.stores.mainModule.MainActivity
-import com.cursosant.android.stores.mainModule.viewModel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 class EditStoreFragment : Fragment() {
 
@@ -57,7 +53,7 @@ class EditStoreFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        mEditStoreViewModel.getStoreSelected().observe(viewLifecycleOwner, {
+        mEditStoreViewModel.getStoreSelected().observe(viewLifecycleOwner) {
             mStoreEntity = it
             if (it.id != 0L) {
                 mIsEditMode = true
@@ -66,9 +62,9 @@ class EditStoreFragment : Fragment() {
                 mIsEditMode = false
             }
             setupActionBar()
-        })
+        }
 
-        mEditStoreViewModel.getResult().observe(viewLifecycleOwner, { result ->
+        mEditStoreViewModel.getResult().observe(viewLifecycleOwner) { result ->
             hideKeyboard()
             when (result) {
                 is Long -> {
@@ -90,7 +86,7 @@ class EditStoreFragment : Fragment() {
                     ).show()
                 }
             }
-        })
+        }
     }
 
     private fun setupActionBar() {
