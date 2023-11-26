@@ -16,6 +16,8 @@ class MainInteractor {
     fun getStores(callback: (MutableList<StoreEntity>) -> Unit) {
         val url = Constants.STORES_URL + Constants.GET_ALL_PATH
 
+        val storeList = mutableListOf<StoreEntity>()
+
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null, { response ->
             val status = response.optInt(Constants.STATUS_PROPERTY, Constants.ERROR)
             Log.i("status", status.toString())
@@ -26,10 +28,15 @@ class MainInteractor {
                     val storeList =
                         Gson().fromJson<MutableList<StoreEntity>>(jsonList, mutableListType)
                     callback(storeList)
+                    return@JsonObjectRequest
                 }
+                callback(storeList)
             }
+            callback(storeList)
+
         }, {
             it.printStackTrace()
+            callback(storeList)
         })
 
         StoreApplication.storeAPI.addToRequestQueue(jsonObjectRequest)
