@@ -20,10 +20,13 @@ class MainInteractor {
             val status = response.optInt(Constants.STATUS_PROPERTY, Constants.ERROR)
             Log.i("status", status.toString())
             if (status == Constants.SUCCESS) {
-                val jsonList = response.getJSONArray(Constants.STORES_PROPERTY).toString()
+                val jsonList = response.optJSONArray(Constants.STORES_PROPERTY)?.toString()
                 val mutableListType = object : TypeToken<MutableList<StoreEntity>>() {}.type
-                val storeList = Gson().fromJson<MutableList<StoreEntity>>(jsonList, mutableListType)
-                callback(storeList)
+                if (!jsonList.isNullOrEmpty()) {
+                    val storeList =
+                        Gson().fromJson<MutableList<StoreEntity>>(jsonList, mutableListType)
+                    callback(storeList)
+                }
             }
         }, {
             it.printStackTrace()
