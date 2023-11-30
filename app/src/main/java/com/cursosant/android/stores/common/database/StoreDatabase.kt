@@ -14,7 +14,7 @@ import com.cursosant.android.stores.common.entities.StoreEntity
  * All my Courses(Only on Udemy):
  * https://www.udemy.com/user/alain-nicolas-tello/
  ***/
-@Database(entities = [StoreEntity::class], version = 2)
+@Database(entities = [StoreEntity::class], version = 3)
 abstract class StoreDatabase : RoomDatabase() {
     abstract fun storeDao(): StoreDao
 }

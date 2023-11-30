@@ -1,5 +1,6 @@
 package com.cursosant.android.stores.editModule.model
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
 import com.cursosant.android.stores.StoreApplication
 import com.cursosant.android.stores.common.entities.StoreEntity
@@ -14,9 +15,12 @@ class EditStoreInteractor {
         return StoreApplication.database.storeDao().getStoreById(id)
     }
 
-    suspend fun saveStore(storeEntity: StoreEntity) {
-        val result = StoreApplication.database.storeDao().addStore(storeEntity)
-        if (result == 0L) throw StoresException(TypeError.INSERT)
+    suspend fun saveStore(storeEntity: StoreEntity) = withContext(Dispatchers.IO) {
+        try {
+            StoreApplication.database.storeDao().addStore(storeEntity)
+        } catch (e: SQLiteConstraintException) {
+            throw StoresException(TypeError.INSERT)
+        }
     }
 
     suspend fun updateStore(storeEntity: StoreEntity) = withContext(Dispatchers.IO) {
