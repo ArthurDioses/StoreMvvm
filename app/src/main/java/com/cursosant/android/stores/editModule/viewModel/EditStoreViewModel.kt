@@ -3,8 +3,13 @@ package com.cursosant.android.stores.editModule.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cursosant.android.stores.common.entities.StoreEntity
+import com.cursosant.android.stores.common.utils.StoresException
+import com.cursosant.android.stores.common.utils.TypeError
 import com.cursosant.android.stores.editModule.model.EditStoreInteractor
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class EditStoreViewModel : ViewModel() {
     private var storeId: Long = 0
@@ -13,10 +18,13 @@ class EditStoreViewModel : ViewModel() {
     private val result = MutableLiveData<Any>()
 
     private val interactor: EditStoreInteractor
+    private val typeError: MutableLiveData<TypeError> = MutableLiveData()
 
     init {
         interactor = EditStoreInteractor()
     }
+
+    fun getTypeError(): MutableLiveData<TypeError> = typeError
 
     fun setStoreSelected(storeEntity: StoreEntity) {
         //storeSelected.value = storeEntity
@@ -44,16 +52,23 @@ class EditStoreViewModel : ViewModel() {
     }
 
     fun saveStore(storeEntity: StoreEntity) {
-        interactor.saveStore(storeEntity) { newId ->
-            result.value = newId
-        }
+        executeAction(storeEntity) { interactor.saveStore(storeEntity) }
     }
 
     fun updateStore(storeEntity: StoreEntity) {
-        interactor.updateStore(storeEntity) { storeUpdate ->
-            result.value = storeUpdate
-        }
+        executeAction(storeEntity) { interactor.updateStore(storeEntity) }
     }
 
+    private fun executeAction(storeEntity: StoreEntity, block: suspend () -> Unit): Job {
+        return viewModelScope.launch {
+            try {
+                block()
+                result.value = storeEntity
+            } catch (e: StoresException) {
+                typeError.value = e.typeError
+                e.printStackTrace()
+            }
+        }
+    }
 
 }

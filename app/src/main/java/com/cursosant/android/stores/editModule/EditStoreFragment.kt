@@ -67,23 +67,16 @@ class EditStoreFragment : Fragment() {
         mEditStoreViewModel.getResult().observe(viewLifecycleOwner) { result ->
             hideKeyboard()
             when (result) {
-                is Long -> {
-                    mStoreEntity.id = result
-                    mEditStoreViewModel.setStoreSelected(mStoreEntity)
-
-                    Toast.makeText(
-                        mActivity, R.string.edit_store_message_save_success, Toast.LENGTH_SHORT
-                    ).show()
-                    mActivity?.onBackPressed()
-                }
-
                 is StoreEntity -> {
+                    val msgRes =
+                        if (result.id == 0L) R.string.edit_store_message_save_success else R.string.edit_store_message_update_success
                     mEditStoreViewModel.setStoreSelected(mStoreEntity)
                     Snackbar.make(
                         mBinding.root,
-                        R.string.edit_store_message_update_success,
+                        msgRes,
                         Snackbar.LENGTH_SHORT
                     ).show()
+                    mActivity?.onBackPressed()
                 }
             }
         }
