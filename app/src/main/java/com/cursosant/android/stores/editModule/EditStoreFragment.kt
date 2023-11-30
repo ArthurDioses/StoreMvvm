@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.cursosant.android.stores.R
 import com.cursosant.android.stores.common.entities.StoreEntity
+import com.cursosant.android.stores.common.utils.TypeError
 import com.cursosant.android.stores.databinding.FragmentEditStoreBinding
 import com.cursosant.android.stores.editModule.viewModel.EditStoreViewModel
 import com.cursosant.android.stores.mainModule.MainActivity
@@ -79,6 +80,17 @@ class EditStoreFragment : Fragment() {
                     mActivity?.onBackPressed()
                 }
             }
+        }
+
+        mEditStoreViewModel.getTypeError().observe(viewLifecycleOwner) { typeError ->
+            val msgRes = when (typeError) {
+                TypeError.GET -> R.string.main_error_get
+                TypeError.INSERT -> R.string.main_error_insert
+                TypeError.UPDATE -> R.string.main_error_update
+                TypeError.DELETE -> R.string.main_error_delete
+                else -> R.string.main_error_unknown
+            }
+            Snackbar.make(mBinding.root, msgRes, Snackbar.LENGTH_SHORT).show()
         }
     }
 
