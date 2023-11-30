@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 
 class EditStoreViewModel : ViewModel() {
     private var storeId: Long = 0
-    private val storeSelected = MutableLiveData<StoreEntity>()
     private val showFab = MutableLiveData<Boolean>()
     private val result = MutableLiveData<Any>()
 
@@ -24,10 +23,13 @@ class EditStoreViewModel : ViewModel() {
         interactor = EditStoreInteractor()
     }
 
+    fun setTypeError(typeError: TypeError) {
+        this.typeError.value = typeError
+    }
+
     fun getTypeError(): MutableLiveData<TypeError> = typeError
 
     fun setStoreSelected(storeEntity: StoreEntity) {
-        //storeSelected.value = storeEntity
         storeId = storeEntity.id
     }
 

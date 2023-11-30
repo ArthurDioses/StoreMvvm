@@ -37,8 +37,10 @@ class EditStoreFragment : Fragment() {
             ViewModelProvider(requireActivity()).get(EditStoreViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle? ): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mBinding = FragmentEditStoreBinding.inflate(inflater, container, false)
 
         return mBinding.root
@@ -83,22 +85,25 @@ class EditStoreFragment : Fragment() {
         }
 
         mEditStoreViewModel.getTypeError().observe(viewLifecycleOwner) { typeError ->
-            val msgRes = when (typeError) {
-                TypeError.GET -> R.string.main_error_get
-                TypeError.INSERT -> R.string.main_error_insert
-                TypeError.UPDATE -> R.string.main_error_update
-                TypeError.DELETE -> R.string.main_error_delete
-                else -> R.string.main_error_unknown
+            if (typeError != TypeError.NONE) {
+                val msgRes = when (typeError) {
+                    TypeError.GET -> R.string.main_error_get
+                    TypeError.INSERT -> R.string.main_error_insert
+                    TypeError.UPDATE -> R.string.main_error_update
+                    TypeError.DELETE -> R.string.main_error_delete
+                    else -> R.string.main_error_unknown
+                }
+                Snackbar.make(mBinding.root, msgRes, Snackbar.LENGTH_SHORT).show()
             }
-            Snackbar.make(mBinding.root, msgRes, Snackbar.LENGTH_SHORT).show()
         }
     }
 
     private fun setupActionBar() {
         mActivity = activity as? MainActivity
         mActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mActivity?.supportActionBar?.title = if (mIsEditMode) getString(R.string.edit_store_title_edit)
-                                            else getString(R.string.edit_store_title_add)
+        mActivity?.supportActionBar?.title =
+            if (mIsEditMode) getString(R.string.edit_store_title_edit)
+            else getString(R.string.edit_store_title_add)
 
         setHasOptionsMenu(true)
     }
@@ -114,16 +119,16 @@ class EditStoreFragment : Fragment() {
         }
     }
 
-    private fun loadImage(url: String){
+    private fun loadImage(url: String) {
         Glide.with(this)
-                .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .into(mBinding.imgPhoto)
+            .load(url)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .centerCrop()
+            .into(mBinding.imgPhoto)
     }
 
     private fun setUiStore(storeEntity: StoreEntity) {
-        with(mBinding){
+        with(mBinding) {
             etName.text = storeEntity.name.editable()
             etPhone.text = storeEntity.phone.editable()
             etWebsite.text = storeEntity.website.editable()
@@ -164,19 +169,21 @@ class EditStoreFragment : Fragment() {
         }
     }
 
-    private fun validateFields(vararg textFields: TextInputLayout): Boolean{
+    private fun validateFields(vararg textFields: TextInputLayout): Boolean {
         var isValid = true
 
-        for (textField in textFields){
-            if (textField.editText?.text.toString().trim().isEmpty()){
+        for (textField in textFields) {
+            if (textField.editText?.text.toString().trim().isEmpty()) {
                 textField.error = getString(R.string.helper_required)
                 isValid = false
             } else textField.error = null
         }
 
-        if (!isValid) Snackbar.make(mBinding.root,
+        if (!isValid) Snackbar.make(
+            mBinding.root,
             R.string.edit_store_message_valid,
-                Snackbar.LENGTH_SHORT).show()
+            Snackbar.LENGTH_SHORT
+        ).show()
 
         return isValid
     }
@@ -184,19 +191,19 @@ class EditStoreFragment : Fragment() {
     private fun validateFields(): Boolean {
         var isValid = true
 
-        if (mBinding.etPhotoUrl.text.toString().trim().isEmpty()){
+        if (mBinding.etPhotoUrl.text.toString().trim().isEmpty()) {
             mBinding.tilPhotoUrl.error = getString(R.string.helper_required)
             mBinding.etPhotoUrl.requestFocus()
             isValid = false
         }
 
-        if (mBinding.etPhone.text.toString().trim().isEmpty()){
+        if (mBinding.etPhone.text.toString().trim().isEmpty()) {
             mBinding.tilPhone.error = getString(R.string.helper_required)
             mBinding.etPhone.requestFocus()
             isValid = false
         }
 
-        if (mBinding.etName.text.toString().trim().isEmpty()){
+        if (mBinding.etName.text.toString().trim().isEmpty()) {
             mBinding.tilName.error = getString(R.string.helper_required)
             mBinding.etName.requestFocus()
             isValid = false
@@ -222,6 +229,7 @@ class EditStoreFragment : Fragment() {
         mActivity?.supportActionBar?.title = getString(R.string.app_name)
         mEditStoreViewModel.setShowFab(true)
         mEditStoreViewModel.setResult(Any())
+        mEditStoreViewModel.setTypeError(TypeError.NONE)
 
         setHasOptionsMenu(false)
         super.onDestroy()
