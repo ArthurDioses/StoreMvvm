@@ -16,8 +16,6 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 class MainInteractor {
 
