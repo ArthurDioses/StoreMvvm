@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.common.utils.Constants
+import com.cursosant.android.stores.common.utils.TypeError
 import com.cursosant.android.stores.mainModule.model.MainInteractor
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ class MainViewModel : ViewModel() {
         interactor = MainInteractor()
     }
 
+    private val typeError: MutableLiveData<TypeError> = MutableLiveData()
     private val showProgress: MutableLiveData<Boolean> = MutableLiveData()
 
     /*
@@ -74,5 +76,7 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
+    fun getTypeError(): MutableLiveData<TypeError> = typeError
 
 }
