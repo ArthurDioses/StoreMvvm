@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.common.utils.Constants
+import com.cursosant.android.stores.common.utils.StoresException
 import com.cursosant.android.stores.common.utils.TypeError
 import com.cursosant.android.stores.mainModule.model.MainInteractor
 import kotlinx.coroutines.Job
@@ -69,7 +70,8 @@ class MainViewModel : ViewModel() {
             showProgress.value = Constants.SHOW
             try {
                 block()
-            } catch (e: Exception) {
+            } catch (e: StoresException) {
+                typeError.value = e.typeError
                 e.printStackTrace()
             } finally {
                 showProgress.value = Constants.HIDE

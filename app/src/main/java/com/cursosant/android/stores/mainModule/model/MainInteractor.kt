@@ -9,6 +9,8 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.cursosant.android.stores.StoreApplication
 import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.common.utils.Constants
+import com.cursosant.android.stores.common.utils.StoresException
+import com.cursosant.android.stores.common.utils.TypeError
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.delay
@@ -87,11 +89,13 @@ class MainInteractor {
 
     suspend fun deleteStore(storeEntity: StoreEntity) {
         delay(1_500)
-        StoreApplication.database.storeDao().deleteStore(storeEntity)
+        val result = StoreApplication.database.storeDao().deleteStore(storeEntity)
+        if (result == 0) throw StoresException(TypeError.DELETE)
     }
 
     suspend fun updateStore(storeEntity: StoreEntity) {
         delay(300)
-        StoreApplication.database.storeDao().updateStore(storeEntity)
+        val result = StoreApplication.database.storeDao().updateStore(storeEntity)
+        if (result == 0) throw StoresException(TypeError.UPDATE)
     }
 }
