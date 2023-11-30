@@ -23,12 +23,14 @@ class EditStoreInteractor {
     }
 
     fun updateStore(storeEntity: StoreEntity, callback: (StoreEntity) -> Unit) {
+        /*
         doAsync {
             val newId = StoreApplication.database.storeDao().updateStore(storeEntity)
             uiThread {
                 callback(storeEntity)
             }
         }
+        */
     }
 
 
