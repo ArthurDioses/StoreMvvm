@@ -18,12 +18,16 @@ class MainViewModel : ViewModel() {
 
     private val showProgress: MutableLiveData<Boolean> = MutableLiveData()
 
+    /*
     private val stores: MutableLiveData<MutableList<StoreEntity>> by lazy {
         MutableLiveData<MutableList<StoreEntity>>().also {
             loadStores()
         }
 
     }
+    */
+
+    private val stores = interactor.stores
 
     fun getStores(): LiveData<MutableList<StoreEntity>> {
         return stores
@@ -33,6 +37,7 @@ class MainViewModel : ViewModel() {
         return showProgress
     }
 
+    /*
     private fun loadStores() {
         showProgress.value = Constants.SHOW
         interactor.getStores {
@@ -41,13 +46,14 @@ class MainViewModel : ViewModel() {
             storeList = it
         }
     }
+    */
 
     fun deleteStore(storeEntity: StoreEntity) {
         interactor.deleteStore(storeEntity) {
             val index = storeList.indexOf(storeEntity)
             if (index != -1) {
                 storeList.removeAt(index)
-                stores.value = storeList
+                //stores.value = storeList
             }
         }
     }
@@ -59,7 +65,7 @@ class MainViewModel : ViewModel() {
             val index = storeList.indexOf(storeEntity)
             if (index != -1) {
                 storeList[index] = storeEntity
-                stores.value = storeList
+                //stores.value = storeList
             }
         }
     }

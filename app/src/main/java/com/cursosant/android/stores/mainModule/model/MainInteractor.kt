@@ -1,6 +1,8 @@
 package com.cursosant.android.stores.mainModule.model
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.cursosant.android.stores.StoreApplication
@@ -13,6 +15,7 @@ import org.jetbrains.anko.uiThread
 
 class MainInteractor {
 
+    /*
     fun getStores(callback: (MutableList<StoreEntity>) -> Unit) {
         val isLocal = true
         if (isLocal) {
@@ -25,7 +28,9 @@ class MainInteractor {
             }
         }
     }
+    */
 
+    /*
     fun getStoresAPI(callback: (MutableList<StoreEntity>) -> Unit) {
         val url = Constants.STORES_URL + Constants.GET_ALL_PATH
 
@@ -54,7 +59,9 @@ class MainInteractor {
 
         StoreApplication.storeAPI.addToRequestQueue(jsonObjectRequest)
     }
+    */
 
+    /*
     fun getStoresRoom(callback: (MutableList<StoreEntity>) -> Unit) {
         doAsync {
             val storeList = StoreApplication.database.storeDao().getAllStores()
@@ -64,6 +71,12 @@ class MainInteractor {
                 callback(storeList)
             }
         }
+    }
+     */
+
+    val stores: LiveData<MutableList<StoreEntity>> = liveData {
+        val storesLiveData = StoreApplication.database.storeDao().getAllStores()
+        emitSource(storesLiveData)
     }
 
     fun deleteStore(storeEntity: StoreEntity, callback: (StoreEntity) -> Unit) {
