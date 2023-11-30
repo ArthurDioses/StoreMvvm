@@ -54,8 +54,8 @@ class EditStoreFragment : Fragment() {
 
     private fun setupViewModel() {
         mEditStoreViewModel.getStoreSelected().observe(viewLifecycleOwner) {
-            mStoreEntity = it?: StoreEntity()
-            if (it.id != 0L) {
+            mStoreEntity = it ?: StoreEntity()
+            if (it != null) {
                 mIsEditMode = true
                 setUiStore(it)
             } else {
@@ -200,10 +200,10 @@ class EditStoreFragment : Fragment() {
         return isValid
     }
 
-    private fun hideKeyboard(){
-        val imm = mActivity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        if (view != null){
-            imm.hideSoftInputFromWindow(view!!.windowToken, 0)
+    private fun hideKeyboard() {
+        val imm = mActivity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        if (view != null) {
+            imm?.hideSoftInputFromWindow(view!!.windowToken, 0)
         }
     }
 
