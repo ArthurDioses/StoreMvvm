@@ -20,7 +20,7 @@ interface StoreDao {
     fun getAllStores(): LiveData<MutableList<StoreEntity>>
 
     @Query("SELECT * FROM StoreEntity where id = :id")
-    fun getStoreById(id: Long): StoreEntity
+    fun getStoreById(id: Long): LiveData<StoreEntity>
 
     @Insert
     fun addStore(storeEntity: StoreEntity): Long

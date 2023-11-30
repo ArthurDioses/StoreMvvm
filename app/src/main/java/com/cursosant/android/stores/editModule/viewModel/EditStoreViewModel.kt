@@ -7,6 +7,7 @@ import com.cursosant.android.stores.common.entities.StoreEntity
 import com.cursosant.android.stores.editModule.model.EditStoreInteractor
 
 class EditStoreViewModel : ViewModel() {
+    private var storeId: Long = 0
     private val storeSelected = MutableLiveData<StoreEntity>()
     private val showFab = MutableLiveData<Boolean>()
     private val result = MutableLiveData<Any>()
@@ -18,11 +19,12 @@ class EditStoreViewModel : ViewModel() {
     }
 
     fun setStoreSelected(storeEntity: StoreEntity) {
-        storeSelected.value = storeEntity
+        //storeSelected.value = storeEntity
+        storeId = storeEntity.id
     }
 
     fun getStoreSelected(): LiveData<StoreEntity> {
-        return storeSelected
+        return interactor.getStoreById(storeId)
     }
 
     fun setShowFab(isVisible: Boolean) {
