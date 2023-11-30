@@ -14,6 +14,19 @@ import org.jetbrains.anko.uiThread
 class MainInteractor {
 
     fun getStores(callback: (MutableList<StoreEntity>) -> Unit) {
+        val isLocal = true
+        if (isLocal) {
+            getStoresRoom { storeList ->
+                callback(storeList)
+            }
+        } else {
+            getStoresAPI { storeList ->
+                callback(storeList)
+            }
+        }
+    }
+
+    fun getStoresAPI(callback: (MutableList<StoreEntity>) -> Unit) {
         val url = Constants.STORES_URL + Constants.GET_ALL_PATH
 
         val storeList = mutableListOf<StoreEntity>()
