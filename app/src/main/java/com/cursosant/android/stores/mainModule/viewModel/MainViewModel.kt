@@ -13,25 +13,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
-    private var storeList: MutableList<StoreEntity>
     private val interactor: MainInteractor
 
     init {
-        storeList = mutableListOf()
         interactor = MainInteractor()
     }
 
     private val typeError: MutableLiveData<TypeError> = MutableLiveData()
     private val showProgress: MutableLiveData<Boolean> = MutableLiveData()
-
-    /*
-    private val stores: MutableLiveData<MutableList<StoreEntity>> by lazy {
-        MutableLiveData<MutableList<StoreEntity>>().also {
-            loadStores()
-        }
-
-    }
-    */
 
     private val stores = interactor.stores
 
@@ -42,17 +31,6 @@ class MainViewModel : ViewModel() {
     fun isShowProgress(): LiveData<Boolean> {
         return showProgress
     }
-
-    /*
-    private fun loadStores() {
-        showProgress.value = Constants.SHOW
-        interactor.getStores {
-            showProgress.value = Constants.HIDE
-            stores.value = it
-            storeList = it
-        }
-    }
-    */
 
     fun deleteStore(storeEntity: StoreEntity) {
         executeAction { interactor.deleteStore(storeEntity) }
