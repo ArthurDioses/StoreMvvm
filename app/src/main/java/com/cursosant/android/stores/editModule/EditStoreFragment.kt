@@ -227,7 +227,6 @@ class EditStoreFragment : Fragment() {
     override fun onDestroy() {
         mActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         mActivity?.supportActionBar?.title = getString(R.string.app_name)
-        mEditStoreViewModel.setShowFab(true)
         mEditStoreViewModel.setResult(Any())
         mEditStoreViewModel.setTypeError(TypeError.NONE)
 
