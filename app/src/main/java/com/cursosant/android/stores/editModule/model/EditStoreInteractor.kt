@@ -15,7 +15,6 @@ class EditStoreInteractor {
     fun saveStore(storeEntity: StoreEntity, callback: (Long) -> Unit) {
         doAsync {
             val newId = StoreApplication.database.storeDao().addStore(storeEntity)
-            StoreApplication.database.storeDao().deleteStore(storeEntity)
             uiThread {
                 callback(newId)
             }
