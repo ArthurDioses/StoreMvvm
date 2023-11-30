@@ -3,6 +3,7 @@ package com.cursosant.android.stores.mainModule.model
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.lifecycle.map
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.cursosant.android.stores.StoreApplication
@@ -75,8 +76,12 @@ class MainInteractor {
      */
 
     val stores: LiveData<MutableList<StoreEntity>> = liveData {
+        kotlinx.coroutines.delay(1_000)//Temporal to test
         val storesLiveData = StoreApplication.database.storeDao().getAllStores()
-        emitSource(storesLiveData)
+        emitSource(storesLiveData.map { stores ->
+            stores.sortedBy { it.name }.toMutableList()
+
+        })
     }
 
     fun deleteStore(storeEntity: StoreEntity, callback: (StoreEntity) -> Unit) {
