@@ -95,10 +95,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        mEditStoreViewModel.setShowFab(true)
-    }
     /*
     * OnClickListener
     * */
