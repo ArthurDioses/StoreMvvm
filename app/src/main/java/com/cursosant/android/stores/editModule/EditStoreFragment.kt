@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,7 @@ import com.cursosant.android.stores.common.utils.TypeError
 import com.cursosant.android.stores.databinding.FragmentEditStoreBinding
 import com.cursosant.android.stores.editModule.viewModel.EditStoreViewModel
 import com.cursosant.android.stores.mainModule.MainActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
@@ -207,5 +209,28 @@ class EditStoreFragment : Fragment() {
 
         setHasOptionsMenu(false)
         super.onDestroy()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(this, object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                MaterialAlertDialogBuilder(requireActivity())
+                    .setTitle(R.string.dialog_exit_title)
+                    .setMessage(R.string.dialog_exit_message)
+                    .setPositiveButton(R.string.dialog_exit_ok) { _, _ ->
+                        if (isEnabled) {
+                            isEnabled = false
+                            requireActivity().onBackPressedDispatcher.onBackPressed()
+                            mEditStoreViewModel.setShowFab(true)
+                        }
+                    }
+                    .setNegativeButton(R.string.dialog_delete_cancel, null)
+                    .show()
+
+            }
+
+        })
     }
 }

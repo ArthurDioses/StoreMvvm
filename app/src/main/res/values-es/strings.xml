@@ -35,4 +35,8 @@
     <string name="main_error_update">Error al actualizar</string>
     <string name="main_error_delete">Error al eliminar</string>
     <string name="main_error_unknown">Error desconocido</string>
+
+    <string name="dialog_exit_title">¿Salir de esta pantalla?</string>
+    <string name="dialog_exit_message">Si no ha guardado los cambios, se perderán</string>
+    <string name="dialog_exit_ok">Salir</string>
 </resources>
