@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -184,30 +183,6 @@ class EditStoreFragment : Fragment() {
             R.string.edit_store_message_valid,
             Snackbar.LENGTH_SHORT
         ).show()
-
-        return isValid
-    }
-
-    private fun validateFields(): Boolean {
-        var isValid = true
-
-        if (mBinding.etPhotoUrl.text.toString().trim().isEmpty()) {
-            mBinding.tilPhotoUrl.error = getString(R.string.helper_required)
-            mBinding.etPhotoUrl.requestFocus()
-            isValid = false
-        }
-
-        if (mBinding.etPhone.text.toString().trim().isEmpty()) {
-            mBinding.tilPhone.error = getString(R.string.helper_required)
-            mBinding.etPhone.requestFocus()
-            isValid = false
-        }
-
-        if (mBinding.etName.text.toString().trim().isEmpty()) {
-            mBinding.tilName.error = getString(R.string.helper_required)
-            mBinding.etName.requestFocus()
-            isValid = false
-        }
 
         return isValid
     }

@@ -16,12 +16,8 @@ class EditStoreViewModel : ViewModel() {
     private val showFab = MutableLiveData<Boolean>()
     private val result = MutableLiveData<Any>()
 
-    private val interactor: EditStoreInteractor
+    private val interactor: EditStoreInteractor = EditStoreInteractor()
     private val typeError: MutableLiveData<TypeError> = MutableLiveData()
-
-    init {
-        interactor = EditStoreInteractor()
-    }
 
     fun setTypeError(typeError: TypeError) {
         this.typeError.value = typeError

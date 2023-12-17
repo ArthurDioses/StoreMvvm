@@ -13,11 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
-    private val interactor: MainInteractor
-
-    init {
-        interactor = MainInteractor()
-    }
+    private val interactor: MainInteractor = MainInteractor()
 
     private val typeError: MutableLiveData<TypeError> = MutableLiveData()
     private val showProgress: MutableLiveData<Boolean> = MutableLiveData()
