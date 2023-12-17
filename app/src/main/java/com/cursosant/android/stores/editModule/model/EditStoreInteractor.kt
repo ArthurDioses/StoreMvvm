@@ -24,7 +24,6 @@ class EditStoreInteractor {
     }
 
     suspend fun updateStore(storeEntity: StoreEntity) = withContext(Dispatchers.IO) {
-        //storeEntity.id = -1
         try {
             val result = StoreApplication.database.storeDao().updateStore(storeEntity)
             if (result == 0) throw StoresException(TypeError.UPDATE)
